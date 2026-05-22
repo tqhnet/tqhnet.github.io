@@ -968,6 +968,40 @@
       return aStart < bEnd && bStart < aEnd;
     }
 
+    function isWordChar(ch) {
+      return /[\w']/.test(ch);
+    }
+
+    function findVocabSpans(plain, word, key, tip) {
+      const spans = [];
+      const lowerPlain = plain.toLowerCase();
+      const lowerWord = word.toLowerCase();
+      const isPhrase = /\s/.test(word);
+      let searchFrom = 0;
+
+      while (searchFrom <= plain.length - word.length) {
+        const idx = lowerPlain.indexOf(lowerWord, searchFrom);
+        if (idx === -1) break;
+
+        let start = idx;
+        let end = idx + word.length;
+        if (!isPhrase) {
+          while (start > 0 && isWordChar(plain[start - 1])) start--;
+          while (end < plain.length && isWordChar(plain[end])) end++;
+        }
+
+        spans.push({
+          start,
+          end,
+          text: plain.slice(start, end),
+          tip,
+          key,
+        });
+        searchFrom = idx + word.length;
+      }
+      return spans;
+    }
+
     function highlightVocabulary(text, vocabulary, options = {}) {
       const { showMeaning = true, learningMode: learn = false, revealedSet = new Set() } =
         options;
@@ -994,13 +1028,10 @@
         seen.add(key);
 
         const tip = escapeHtml(`${v.pos || ""} ${v.meaning_zh || ""}`.trim());
-        const pattern = new RegExp(`\\b(${escapeRegExp(word)})\\b`, "gi");
-        let m;
-        while ((m = pattern.exec(plain)) !== null) {
-          const start = m.index;
-          const end = start + m[0].length;
-          if (spans.some((s) => rangesOverlap(start, end, s.start, s.end))) continue;
-          spans.push({ start, end, text: m[0], tip, key });
+        for (const span of findVocabSpans(plain, word, key, tip)) {
+          if (spans.some((s) => rangesOverlap(span.start, span.end, s.start, s.end)))
+            continue;
+          spans.push(span);
         }
       }
 
