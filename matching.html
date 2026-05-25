@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文化素养连线学习</title>
+  <script src="js/theme-init.js"></script>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/matching.css" />
+</head>
+<body>
+  <div class="match-page">
+    <header class="match-topbar">
+      <div class="match-topbar-brand">
+        <a class="match-back" href="index.html">← 英语</a>
+        <h1 id="book-title">文化素养连线</h1>
+        <p class="match-topbar-meta" id="book-meta">加载中…</p>
+      </div>
+      <button type="button" class="icon-btn theme-toggle match-theme-btn" id="theme-toggle" title="切换夜间模式" aria-label="切换夜间模式">🌙</button>
+    </header>
+
+    <main id="match-main" class="match-main">
+      <section class="learn-progress-card">
+        <div class="learn-progress-head">
+          <span>学习进度</span>
+          <span id="learn-progress-text" class="learn-progress-text">0 / 0</span>
+        </div>
+        <div class="learn-progress-track">
+          <div id="learn-progress-bar" class="learn-progress-bar"></div>
+        </div>
+        <p id="learn-batch-label" class="learn-batch-label">答题模式 · 第 1 批 · 本批 5 题</p>
+        <div class="match-mode-tabs" role="tablist">
+          <button type="button" class="match-mode-btn" data-mode="study" role="tab">学习模式</button>
+          <button type="button" class="match-mode-btn" data-mode="random" role="tab">随机模式</button>
+          <button type="button" class="match-mode-btn active" data-mode="quiz" role="tab">答题模式</button>
+        </div>
+      </section>
+
+      <header class="match-header">
+        <div>
+          <h2>连线匹配</h2>
+          <p class="match-meta" id="match-meta"></p>
+        </div>
+        <div class="match-toolbar">
+          <button type="button" class="match-btn" id="btn-reset">重置本批</button>
+          <button type="button" class="match-btn" id="btn-next" hidden>继续下一批</button>
+          <button type="button" class="match-btn match-btn-primary" id="btn-check" disabled>检查答案</button>
+        </div>
+      </header>
+
+      <p class="match-hint" id="match-hint">每次 5 题，先点左列术语、再点右列说明；本批全部答对后才能进入下一批</p>
+
+      <div id="match-board" class="match-board">
+        <p class="loading">正在加载题目…</p>
+      </div>
+      <p id="match-result" class="match-result" hidden></p>
+    </main>
+  </div>
+
+  <script type="module" src="js/matching/app.js"></script>
+</body>
+</html>

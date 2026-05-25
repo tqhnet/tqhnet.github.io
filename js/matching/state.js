@@ -1,0 +1,15 @@
+export const state = {
+  data: null,
+  items: [],
+  itemMap: new Map(),
+  learnDone: new Set(),
+  playMode: "quiz",
+  activeItemIds: [],
+  confirmedIds: new Set(),
+  flashWrongId: null,
+  selectedLeft: null,
+  userLinks: {},
+  rightOrder: [],
+  checked: false,
+  batchPerfect: false,
+};
